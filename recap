@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-RECAPCLI_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+RECAPCLI_DIR="$(cd "$(dirname "$(realpath "${BASH_SOURCE[0]}")")" >/dev/null 2>&1 && pwd)"
 
 # Set RECAP_SCHED_PATH in bashrc to override this.
 [ -f $RECAPCLI_DIR/schedule.txt ] && : ${RECAP_SCHED_PATH:="$RECAPCLI_DIR/schedule.txt"}
