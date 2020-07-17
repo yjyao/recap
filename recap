@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+RECAPCLI_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+
+# Set RECAP_SCHED_PATH in bashrc to override this.
+[ -f $RECAPCLI_DIR/schedule.txt ] && : ${RECAP_SCHED_PATH:="$RECAPCLI_DIR/schedule.txt"}
+[ -f ~/.recap/schedule.txt ] && : ${RECAP_SCHED_PATH:="$HOME/.recap/schedule.txt"}
+: ${RECAP_SCHED_PATH?}  # Must define.
+
+# Set RECAP_NOTES_PATH in bashrc to override this.
+[ -f ~/.recap/notes.recap ] && : ${RECAP_NOTES_PATH:="$HOME/.recap/notes.recap"}
+[ -f ~/.notes.recap ] && : ${RECAP_NOTES_PATH:="$HOME/.notes.recap"}
+[ -f notes.recap ] && : ${RECAP_NOTES_PATH:="$PWD/notes.recap"}
+: ${RECAP_NOTES_PATH?}  # Must define.
+
+while read -r sched; do
+  grep "$(date -d "$sched days ago" -I)" "$RECAP_NOTES_PATH"
+done < "$RECAP_SCHED_PATH"
