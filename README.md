@@ -53,7 +53,7 @@ prefixed to the project name, for example `+my-project`. This notation is
 stolen from [todo.txt](https://github.com/todotxt/todo.txt) and has no effects
 on the tool (the tool will not recognize or do anything with the project tags).
 
-A note can also contain hidden parts for self-examination purposes. This can be
+A note can also contain hidden text for self-examination purposes. This can be
 useful for study notes like answers to a question (think of flash cards).
 Hidden text is surrounded with a pair of curly braces.
 
@@ -63,7 +63,8 @@ Here is an example note:
 2020-02-02 hola {hello} +spanish
 ```
 
-NOTE: The tool does not recognize hidden text yet.
+When passed with `--hidden`, the tool replaces hidden text with an sterisk
+(`*`).
 
 ## Schedule syntax
 

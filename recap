@@ -3,6 +3,27 @@
 RECAPCLI_DIR="$(cd "$(dirname "$(realpath \
   "${BASH_SOURCE[0]}")")" >/dev/null 2>&1 && pwd)"
 
+progname="$(basename "$0")"
+
+params="$(getopt -n "$progname" \
+  -o hidden \
+  -l h -- "$@")" ||
+  exit 1
+eval set -- "$params"
+
+while [[ $# > 0 ]]; do
+  case $1 in
+    -h|--hidden )
+      hidden=1
+      ;;
+    -- )
+      shift
+      break
+      ;;
+  esac
+  shift
+done
+
 # Assigns variable "${!var}" to the first existing file in "${paths[@]}".
 read_paths_to_var() {
   var="${1?}"; shift
@@ -22,5 +43,6 @@ read_paths_to_var RECAP_NOTES_PATH \
   "notes.recap" ~/.notes.recap ~/.recap/notes.recap
 
 while read -r sched; do
-  grep "$(date -d "$sched days ago" -I)" "$RECAP_NOTES_PATH"
+  grep "$(date -d "$sched days ago" -I)" "$RECAP_NOTES_PATH" |
+    { [ -n "$hidden" ] && sed 's/{[^}]*}/*/g' || cat; }
 done < "$RECAP_SCHED_PATH"
