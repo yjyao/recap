@@ -1,17 +1,25 @@
 #!/usr/bin/env bash
 
-RECAPCLI_DIR="$(cd "$(dirname "$(realpath "${BASH_SOURCE[0]}")")" >/dev/null 2>&1 && pwd)"
+RECAPCLI_DIR="$(cd "$(dirname "$(realpath \
+  "${BASH_SOURCE[0]}")")" >/dev/null 2>&1 && pwd)"
+
+# Assigns variable "${!var}" to the first existing file in "${paths[@]}".
+read_paths_to_var() {
+  var="${1?}"; shift
+  paths=("$@")
+  [ -n "${!var}" ] && return  # Already defined.
+  for path in "${paths[@]}"; do
+    [ -f "$path" ] && export "$var"="$path" && break
+  done
+}
 
 # Set RECAP_SCHED_PATH in bashrc to override this.
-[ -f $RECAPCLI_DIR/schedule.txt ] && : ${RECAP_SCHED_PATH:="$RECAPCLI_DIR/schedule.txt"}
-[ -f ~/.recap/schedule.txt ] && : ${RECAP_SCHED_PATH:="$HOME/.recap/schedule.txt"}
-: ${RECAP_SCHED_PATH?}  # Must define.
+read_paths_to_var RECAP_SCHED_PATH \
+  ~/.recap/schedule.txt "$RECAPCLI_DIR/schedule.txt"
 
 # Set RECAP_NOTES_PATH in bashrc to override this.
-[ -f ~/.recap/notes.recap ] && : ${RECAP_NOTES_PATH:="$HOME/.recap/notes.recap"}
-[ -f ~/.notes.recap ] && : ${RECAP_NOTES_PATH:="$HOME/.notes.recap"}
-[ -f notes.recap ] && : ${RECAP_NOTES_PATH:="$PWD/notes.recap"}
-: ${RECAP_NOTES_PATH?}  # Must define.
+read_paths_to_var RECAP_NOTES_PATH \
+  "notes.recap" ~/.notes.recap ~/.recap/notes.recap
 
 while read -r sched; do
   grep "$(date -d "$sched days ago" -I)" "$RECAP_NOTES_PATH"
