@@ -64,7 +64,7 @@ Here is an example note:
 ```
 
 When passed with `--hidden`, the tool replaces hidden text with an sterisk
-(`*`).
+(`\*`).
 
 ## Schedule syntax
 
