@@ -6,8 +6,8 @@ RECAPCLI_DIR="$(cd "$(dirname "$(realpath \
 progname="$(basename "$0")"
 
 params="$(getopt -n "$progname" \
-  -o hidden \
-  -l h -- "$@")" ||
+  -o h \
+  -l hidden -- "$@")" ||
   exit 1
 eval set -- "$params"
 
