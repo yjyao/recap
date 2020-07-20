@@ -86,3 +86,7 @@ for the note
 the tool will list this item when you run it on the day after the date
 (2020-02-03), the third day after (2020-02-05), and the tenth day after
 (2020-02-12).
+
+## Related projects
+
+- [Vim syntax support](https://github.com/yjyao/recap.vim)
