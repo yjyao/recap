@@ -14,7 +14,7 @@ eval set -- "$params"
 while [[ $# > 0 ]]; do
   case $1 in
     -h|--hidden )
-      hidden=1
+      RECAP_HIDDEN=1
       ;;
     -d|--date )
       date="$2" ; shift
@@ -47,5 +47,5 @@ read_paths_to_var RECAP_NOTES_PATH \
 
 while read -r sched; do
   grep "$(date -d "$date + $sched days ago" -I)" "$RECAP_NOTES_PATH" |
-    { [ -n "$hidden" ] && sed 's/{[^}]*}/*/g' || cat; }
+    { [ -n "$RECAP_HIDDEN" ] && sed 's/{[^}]*}/*/g' || cat; }
 done < "$RECAP_SCHED_PATH"
