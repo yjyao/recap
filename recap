@@ -6,8 +6,8 @@ RECAPCLI_DIR="$(cd "$(dirname "$(realpath \
 progname="$(basename "$0")"
 
 params="$(getopt -n "$progname" \
-  -o h,d: \
-  -l hidden,date: -- "$@")" ||
+  -o h,H,d: \
+  -l hidden,nohidden,date: -- "$@")" ||
   exit 1
 eval set -- "$params"
 
@@ -15,6 +15,9 @@ while [[ $# > 0 ]]; do
   case $1 in
     -h|--hidden )
       RECAP_HIDDEN=1
+      ;;
+    -H|--nohidden )
+      RECAP_HIDDEN=
       ;;
     -d|--date )
       date="$2" ; shift
