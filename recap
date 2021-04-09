@@ -20,7 +20,7 @@ while [[ $# > 0 ]]; do
       RECAP_HIDDEN=
       ;;
     -d|--date )
-      date="$2" ; shift
+      date="$(date -d "$2" -I)" ; shift
       ;;
     -- )
       shift
