@@ -49,6 +49,6 @@ read_paths_to_var RECAP_NOTES_PATH \
   "notes.recap" ~/.notes.recap ~/.recap/notes.recap
 
 while read -r sched; do
-  grep "$(date -d "$date + $sched days ago" -I)" "$RECAP_NOTES_PATH" |
+  grep "^\s*$(date -d "$date + $sched days ago" -I)" "$RECAP_NOTES_PATH" |
     { [ -n "$RECAP_HIDDEN" ] && sed 's/{[^}]*}/*/g' || cat; }
 done < "$RECAP_SCHED_PATH"

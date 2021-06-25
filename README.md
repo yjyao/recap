@@ -66,6 +66,8 @@ Here is an example note:
 When passed with `--hidden`, the tool replaces hidden text with an sterisk
 (`*`).
 
+Any line not starting with a date is ignored.
+
 ## Schedule syntax
 
 Each line is a positive whole number, indicating how many days after a note is
